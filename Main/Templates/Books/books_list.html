@@ -1,0 +1,54 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+	<div class=container>
+		{% for book in object %}
+			<h1>Book title: <a class="hyperlink-off" href="{% url 'book_details' book.pk %}">{{ book.title|lower|capfirst }} </a></h1>
+
+			{% for element in book.covers.values %}
+				<img class="big-thumbnail" src="{{element.small_thumbnail}}">
+			{% endfor %}
+				
+
+			<p>Publication date: {{book.publication_data}} </p>
+			<p>Authors: {{book.get_all_authors}} </p>
+
+			<p>ISBN: {{book.ISBN}} </p>
+			<p>Pages: {{book.pages}} </p>
+			<p>Publication language: {{book.language}}</p>
+			<br><br>
+		{% endfor %}
+
+	</div>
+
+	{% if is_paginated %}
+
+		{% if page_obj.has_previous and  page_obj.paginator.num_pages > 2 %}
+			<a href="?page=1" class="hyperlink-off"><<</a>
+		{% endif %}
+
+		{% for num in page_obj.paginator.page_range %}
+
+			{% if  page_obj.number == num %}
+				<strong><u><a href="?page={{num}}" class="hyperlink-off">{{num}}</a></u></strong>
+			{% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+				<a href="?page={{num}}" class="hyperlink-off">{{num}}</a>
+			{% endif %}
+
+		{% endfor %}
+
+		{% if page_obj.paginator.num_pages >= 3 and page_obj.number != page_obj.paginator.num_pages %}
+			<a class="hyperlink-off" href="?page={{page_obj.paginator.num_pages}}">>></a>
+		{% endif %}
+
+	{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+

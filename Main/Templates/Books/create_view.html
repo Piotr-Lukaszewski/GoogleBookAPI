@@ -1,0 +1,25 @@
+{% extends 'home.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="content-section">
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class=border-bottom mb-4>Add Book		
+					{{ form|crispy }} 
+				</legend>
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-outline-info">
+					<a class="hyperlink-off" href="#">Add new author</a>
+				</button>
+			</div>	
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Save</button>
+			</div>			
+		</form>
+	</div>
+
+{% endblock %}

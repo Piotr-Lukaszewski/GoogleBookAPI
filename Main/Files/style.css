@@ -1,0 +1,23 @@
+body{
+	background-color: #0f121f;
+	font-family: Ubuntu;		
+	color: #fff;
+	font-size:large;
+	text-align: center;
+	
+}
+#navbargroup{
+	padding-bottom: 50px;
+}
+
+.hyperlink-off, .hyperlink-off:hover{
+	text-decoration: none;
+	font-family: Ubuntu;		
+	color: #fff;
+}
+
+/*.small-thumbnail{
+	width: 35px;
+	height: 35px;
+
+}*/

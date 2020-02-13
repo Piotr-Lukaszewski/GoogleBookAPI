@@ -1,0 +1,32 @@
+{% load static %}
+
+<header>
+
+	<nav class="navbar navbar-dark .bg-dark navbar-expand-md" id="navbargroup">
+		<div class="container" id="mainmenu">
+			<ul class="navbar-nav " >
+				<li class="nav-item px-5" size="16">
+					<a  class="nav-link hyperlink"  href="{% url 'book_add' %}">Add Book</a>					
+				</li>
+
+				<li class="nav-item px-5" size="16">
+					<a class="nav-link" href="{% url 'book_list' %}">Books List</a>		
+				</li>
+
+				<li class="nav-item px-5" size="16">
+					<a class="nav-link hyperlink" href="#">Import Books</a>					
+				</li>
+
+				<li class="nav-item px-5" size="16">
+					<a class="nav-link hyperlink" href="#">Add Author</a>					
+				</li>
+
+				<li class="nav-item px-5" size="16">
+					<a class="nav-link hyperlink" href="#">Books API View</a>					
+				</li>
+
+			</ul>
+		</div>
+	</nav>
+
+</header>

@@ -1,0 +1,42 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+		
+
+	   <div class="container">
+        {% if messages %}
+	        {% for msg in messages %}
+		        <div class="col-md-12">
+		            <center>
+		                {{msg}}
+		            </center>           
+		        </div>
+	        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class=container>    	
+		<h1>Book title: {{ object.title|lower|capfirst }} </h1>
+		<br>
+		{% for element in object.covers.values %}
+			<img class="big-thumbnail" src="{{element.big_thumbnail}}">
+		{% endfor %}	
+		<br><br><br>
+		<p>Publication date: {{object.publication_data}} </p>
+		<p>Authors: {{object.get_all_authors}} </p>
+
+
+
+		<p>ISBN: {{object.ISBN}} </p>
+		<p>Pages: {{object.pages}} </p>
+		<p>Publication language: {{object.language}}</p>
+		<br><br>
+
+
+	</div>
+
+
+
+
+{% endblock %}
