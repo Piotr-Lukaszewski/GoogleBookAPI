@@ -5,7 +5,7 @@ class Book(models.Model):
     title = models.CharField(max_length=100)    
     publication_date = models.CharField(max_length=11)
     authors = models.ManyToManyField("Author", related_name="author")
-    ISBN = ISBNField() #industryIdentifiers for i in industryIdentifiers:;  if i["type"] == "ISBN_13":;     print(i["identifier"])
+    ISBN = ISBNField() 
     pages = models.IntegerField(blank=True)
     language = models.CharField(max_length=4)
 

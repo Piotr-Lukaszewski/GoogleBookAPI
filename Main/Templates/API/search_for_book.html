@@ -1,0 +1,46 @@
+{% extends 'home.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="content-section">
+		<form method="POST">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class=border-bottom mb-4>Search for a book		
+					{{ form|crispy }} 
+					<br>
+				</legend>
+			</fieldset>
+
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Save</button>
+			</div>			
+		</form>
+		<br><br>
+		<p>
+			# q - Search for volumes that contain this text string. There are special keywords you can specify in the search terms to search in particular fields, such as:</p>
+		<p>
+			# intitle: Returns results where the text following this keyword is found in the title.
+		</p>
+		<p>
+			# inauthor: Returns results where the text following this keyword is found in the author.
+		</p>
+		<p>
+			# inpublisher: Returns results where the text following this keyword is found in the publisher.
+		</p>
+		<p>
+			# subject: Returns results where the text following this keyword is listed in the category list of the volume.
+		</p>
+		<p>
+			# isbn: Returns results where the text following this keyword is the ISBN number.
+		</p>
+		<p>
+			# lccn: Returns results where the text following this keyword is the Library of Congress Control Number.
+		</p>
+		<p>
+			# oclc: Returns results where the text following this keyword is the Online Computer Library Center number.
+		</p>
+	</div>
+
+{% endblock %}

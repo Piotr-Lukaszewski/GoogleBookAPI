@@ -1,10 +1,10 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView, View
+from django.views.generic import ListView, DetailView, CreateView, View, FormView
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
-from Book.forms import BookForm
-from Book.models import Book, Author
+from Book.forms import BookForm, AuthorForm, CoversForm
+from Book.models import Book, Author, BookCovers
 
 
 def homeviewfunc(request, *args, **kwargs):
@@ -20,7 +20,8 @@ class BookListView(ListView):
     model = Book
     template_name = "Books/books_list.html"
     context_object_name = "object" #by default it's object_list 
-    paginate_by = 2
+    paginate_by = 10
+
 
     def get_context_data(self, **kwargs):      
         msg_storage = messages.get_messages(self.request)
@@ -36,7 +37,7 @@ class BookDetailView(DetailView):
 
 class BookAddView(FormView):
     model = Book
-    template_name = "Books/create_view.html"    
+    template_name = "Books/create_book.html"    
     form_class = BookForm
     success_url = reverse_lazy("book_list")
 
@@ -56,11 +57,38 @@ class BookAddView(FormView):
             for author in authors:
                 new_book.authors.add(author)
             new_book.save()
-        return redirect(reverse_lazy("book_list"))
+            pk = new_book.pk
+            #return redirect(reverse_lazy("covers_add"), pk=pk)
+            return redirect("covers_add", pk=pk)#
 
+class AddAuthorView(FormView):
+    model = Author
+    template_name = "Books/add_author.html"
+    success_url = reverse_lazy("book_list")
+    form_class = AuthorForm
 
+    def form_valid(self, form):# form_valie
+        if Author.objects.filter(name=form.cleaned_data["name"].lower()).count() > 0:
+            messages.warning(self.request, f'Author "{form.cleaned_data["name"].lower()}" already exist in database.')
+        else:
+            new_author = Author(name=form.cleaned_data["name"])
+            new_author.save()
+        return redirect(reverse_lazy("book_add"))
+        
+        
+class AddBookCoverView(FormView):
+    model = BookCovers
+    template_name = "Books/add_covers.html"
+    success_url = reverse_lazy("book_list")
+    form_class = CoversForm
 
-
+    def form_valid(self, form):
+        new_book = Book.objects.get(pk=self.kwargs["pk"])
+        new_covers, status = BookCovers.objects.get_or_create(book=new_book)
+        new_covers.small_thumbnail = form.cleaned_data["small_thumbnail"]
+        new_covers.big_thumbnail = form.cleaned_data["big_thumbnail"]
+        new_covers.save()
+        return redirect("book_details", pk=self.kwargs['pk'])
 
 
 
