@@ -3,6 +3,18 @@
 
 {% block content %}
 
+	<div class="container">
+		{% if messages %}
+			{% for msg in messages %}
+				<div class="col-md-12">
+					<center>
+						{{msg}}
+					</center>			
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+
 	<div class="content-section">
 		<form method="GET">
 			{% csrf_token %}

@@ -1,16 +1,18 @@
 from django.db import models
 from isbn_field import ISBNField
 
+from Book.validators import page_validator, date_validator #book_unique_validator
+
 class Book(models.Model):
     """
         To do:
-        -page & date validation
+        -page & date validation(x)
     """
     title = models.CharField(max_length=100)    
-    publication_date = models.CharField(max_length=11)
+    publication_date = models.CharField(validators=[date_validator,], max_length=10)
     authors = models.ManyToManyField("Author", related_name="author")
-    ISBN = ISBNField() 
-    pages = models.IntegerField(blank=True)
+    ISBN = ISBNField() #validators=[book_unique_validator,]
+    pages = models.IntegerField(validators=[page_validator,], blank=True)
     language = models.CharField(max_length=4)
 
     def __str__(self):
@@ -40,7 +42,7 @@ class Author(models.Model):
 class BookCovers(models.Model):
     """
         To do:
-        -set default cover in case of null value inserted to db. 
+        -set default cover in case of null value inserted to db. (x)
     """
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="covers")
     small_thumbnail= models.URLField(max_length=250, null= True, blank=True, default='https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781442499577/random-9781442499577_hr.jpg')

@@ -128,17 +128,18 @@ STATIC_URL = '/static/'
 
 ###########################
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "files"), 
+    os.path.join(BASE_DIR, "files"),
     )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files/media')
-MEDIA_URL = '/media/' 
+MEDIA_URL = '/media/'
 #########################
 
 
 
 
 API_KEY = "AIzaSyBQAQERkxeGx1Otp7Rd0UfZDNec96TixRA"
+API_URL = "https://www.googleapis.com/books/v1/volumes"
 # Api_key = os.environ.get('API_KEY')
 
 Crispy_Templata_Pack = 'bootstrap4'

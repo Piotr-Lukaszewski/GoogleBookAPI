@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, View, FormVie
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 
 from Book.forms import BookForm, AuthorForm, CoversForm
 from Book.models import Book, Author, BookCovers
@@ -16,12 +17,13 @@ class HomeView(View):
 
 
 
-class BookListView(ListView):
+class BookListView(ListView, SuccessMessageMixin):
     model = Book
     template_name = "Books/books_list.html"
     context_object_name = "object" #by default it's object_list 
+    #paginate_by = 5
     filterset_class = BookFilter
-    paginate_by = 10
+    
 
 
     def get_context_data(self, **kwargs): 
@@ -43,9 +45,10 @@ class BookAddView(FormView):
     form_class = BookForm
     success_url = reverse_lazy("book_list")
 
-    def form_valid(self, form):
-        if Book.objects.filter(title=form.cleaned_data["title"].lower()).count() > 0:
-            messages.warning(self.request, f'Book "{form.cleaned_data["title"].lower()}" already exist in database.')
+    def form_valid(self, form):    
+        if Book.objects.filter(ISBN=form.cleaned_data["ISBN"]).count() > 0:#title
+            messages.warning(self.request, f'Book "{form.cleaned_data["ISBN"]}" already exist in database.')
+            return redirect("book_details", pk=Book.objects.get(ISBN=form.cleaned_data["ISBN"]).pk)
         else:
             new_book = Book(
                     title=form.cleaned_data["title"].lower(),
@@ -62,6 +65,7 @@ class BookAddView(FormView):
             pk = new_book.pk
             #return redirect(reverse_lazy("covers_add"), pk=pk)
             return redirect("covers_add", pk=pk)#
+           
 
 class AddAuthorView(FormView):
     model = Author

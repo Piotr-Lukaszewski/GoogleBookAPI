@@ -49,10 +49,9 @@ class GoogleImportBook(FormView):
 	def form_valid(self, form):
 		search_type = form.cleaned_data['search_type']
 		search_type = dict(form.fields['search_type'].choices)[search_type]
-		value = str(search_type) + ":" + str(form.cleaned_data["search_phrase"])
-		print(value)
+		value = str(search_type) + ":" + str(form.cleaned_data["search_phrase"])		
 		param = {"q":value, "key":settings.API_KEY}
-		api_url = "https://www.googleapis.com/books/v1/volumes"
+		api_url = settings.API_URL#api_url = "https://www.googleapis.com/books/v1/volumes"	
 		response = requests.get(url=api_url, params=param)
 		items = response.json()["items"]
 		for item in items:
@@ -66,7 +65,7 @@ class GoogleImportBook(FormView):
 				continue
 			new_book = Book(
 					title=item["volumeInfo"].get("title"),
-					publication_date=item["volumeInfo"].get("publishedDate"),
+					publication_date=item["volumeInfo"].get("publishedDate", "0000"),
 					pages=item["volumeInfo"].get("pageCount", 0),
 					language=item["volumeInfo"].get("language"),
 					ISBN=isbn
