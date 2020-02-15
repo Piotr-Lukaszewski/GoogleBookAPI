@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'isbn_field',
     'crispy_forms',
+    'django_filters',
     'Book',
     'API',
 ]
@@ -124,6 +125,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+###########################
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "files"), 
+    )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files/media')
+MEDIA_URL = '/media/' 
+#########################
+
+
+
 
 API_KEY = "AIzaSyBQAQERkxeGx1Otp7Rd0UfZDNec96TixRA"
 # Api_key = os.environ.get('API_KEY')

@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 
 from Book.forms import BookForm, AuthorForm, CoversForm
 from Book.models import Book, Author, BookCovers
-
+from Book.filters import BookFilter
 
 def homeviewfunc(request, *args, **kwargs):
     return render(request, "home.html", {})
@@ -20,12 +20,14 @@ class BookListView(ListView):
     model = Book
     template_name = "Books/books_list.html"
     context_object_name = "object" #by default it's object_list 
+    filterset_class = BookFilter
     paginate_by = 10
 
 
-    def get_context_data(self, **kwargs):      
+    def get_context_data(self, **kwargs): 
+        context = super().get_context_data(**kwargs)     
         msg_storage = messages.get_messages(self.request)
-        context = super().get_context_data(**kwargs)
+        context['filter'] = BookFilter(self.request.GET, queryset=self.get_queryset())        
         context['message'] = msg_storage
         return context
 

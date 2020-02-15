@@ -1,17 +1,36 @@
 {% extends 'home.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
+	<div class="content-section">
+		<form method="GET">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<legend class=border-bottom mb-4>Searching criteria for your book		
+					{{ filter.form|crispy }} <br>
+				</legend>
+			</fieldset>
+
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Search</button>
+			</div>			
+		</form>
+	</div>
+
+	
+
+	
 	<div class=container>
-		{% for book in object %}
+		{% for book in filter.qs %}
 			<h1>Book title: <a class="hyperlink-off" href="{% url 'book_details' book.pk %}">{{ book.title|lower|capfirst }} </a></h1>
 
 			{% for element in book.covers.values %}
 				<img class="big-thumbnail" src="{{element.small_thumbnail}}">
 			{% endfor %}
-				
+			<br>				
 
-			<p>Publication date: {{book.publication_data}} </p>
+			<p>Publication date: {{book.publication_date}} </p>
 			<p>Authors: {{book.get_all_authors}} </p>
 
 			<p>ISBN: {{book.ISBN}} </p>

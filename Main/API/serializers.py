@@ -5,8 +5,6 @@ from Book.models import Book, Author, BookCovers
 
 
 
-# HyperlinkedModelSerializer
-# ModelSerializer
 
 class AuthorSerializer(serializers.ModelSerializer):	
 
@@ -42,19 +40,3 @@ def preview_response():
 
 
 
-
-
-
-
-
-
-	# def book_search(self, form)
-	# 	#self.kwargs['title']
-	# 	#key = settings.API_KEY
-	# 	query_param = {"q": "Tolkien", "key":key}
-	# 	api_url = "https://www.googleapis.com/books/v1/volumes"
-	# 	response = requests.get(url=api_url, params=query_param)
-	# 	items = response.json()['items']#["volumeInfo"]
-	# 	for i in items:
-	# 		print(i['volumeInfo']['title'])
-	# 	#print(items["volumeInfo"]["title"])

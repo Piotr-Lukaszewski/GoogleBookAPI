@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from rest_framework import mixins
 from rest_framework import generics
-from django.views.generic import ListView, DetailView, CreateView, View, FormView
+from django.views.generic import FormView
 from django.urls import reverse_lazy
 import requests
 
@@ -18,14 +18,14 @@ class BookListView(generics.ListCreateAPIView):#mixins.ListModelMixin, mixins.Cr
 
 
 
-class BookDetailView(generics.RetrieveUpdateDestroyAPIView):# RetrieveAPIView
+class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 	queryset = Book.objects.all()
 	serializer_class = BookSerializer
 
 
 
-class AuthorListView(generics.ListCreateAPIView):#ListCreateAPIView
+class AuthorListView(generics.ListCreateAPIView):
 	
 	queryset = Author.objects.all()
 	serializer_class = AuthorSerializer
@@ -36,7 +36,7 @@ class AuthorDetailView(generics.RetrieveUpdateDestroyAPIView):
 	
 	queryset = Author.objects.all()
 	serializer_class = AuthorSerializer
-#generics.CreateAPIView
+
 
 
 
@@ -44,7 +44,6 @@ class GoogleImportBook(FormView):
 	model = Book
 	form_class = GoogleImportForm
 	template_name = "API/search_for_book.html"
-	#success_url = reverse_lazy("import_books")	
 
 
 	def form_valid(self, form):
@@ -87,44 +86,6 @@ class GoogleImportBook(FormView):
 					new_author.save()
 				new_book.authors.add(new_author)
 			new_book.save()
-
-
-
-
-
-
-
-
-		 	# if "ISBN_13" not in item["volumeInfo"]["industryIdentifiers"]:
-		 	# 	print("Nie istnieje pole ISBN_13")
-		 	# 	print(item["volumeInfo"]["industryIdentifiers"])
-
-		 	#industryIdentifiers for i in industryIdentifiers:;  if i["type"] == "ISBN_13":;     print(i["identifier"])
-
-    # title = models.CharField(max_length=100)    
-    # publication_date = models.CharField(max_length=11)
-    # pages = models.IntegerField(blank=True)
-    # language = models.CharField(max_length=4)
-
-    # authors = models.ManyToManyField("Author", related_name="author")
-    # ISBN = ISBNField() 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		return redirect(reverse_lazy("import_books"))
 
 
@@ -151,22 +112,6 @@ class GoogleImportBook(FormView):
 
 
 
-
-
-
-
-
-
-	# def book_search(self, form)
-	# 	#self.kwargs["title"]
-	# 	#key = settings.API_KEY
-	# 	query_param = {"q": "Tolkien", "key":key}
-	# 	api_url = "https://www.googleapis.com/books/v1/volumes"
-	# 	response = requests.get(url=api_url, params=query_param)
-	# 	items = response.json()["items"]#["volumeInfo"]
-	# 	for i in items:
-	# 		print(i["volumeInfo"]["title"])
-	# 	#print(items["volumeInfo"]["title"])
 
 
 
