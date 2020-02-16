@@ -4,7 +4,7 @@ from Book.models import Book, Author, BookCovers
 
 
 class BookFilter(FilterSet):
-	date = DateFromToRangeFilter()
+	#date = DateFromToRangeFilter()
 
 	class Meta:
 		model = Book

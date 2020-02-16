@@ -7,6 +7,7 @@ class Book(models.Model):
     """
         To do:
         -page & date validation(x)
+        -convert date from string to date-format and set filters.
     """
     title = models.CharField(max_length=100)    
     publication_date = models.CharField(validators=[date_validator,], max_length=10)
