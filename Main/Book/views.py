@@ -20,7 +20,7 @@ class HomeView(View):
 class BookListView(ListView, SuccessMessageMixin):
     model = Book
     template_name = "Books/books_list.html"
-    context_object_name = "object" #by default it's object_list 
+    context_object_name = "object" 
     #paginate_by = 5
     filterset_class = BookFilter
     
@@ -63,7 +63,6 @@ class BookAddView(FormView):
                 new_book.authors.add(author)
             new_book.save()
             pk = new_book.pk
-            #return redirect(reverse_lazy("covers_add"), pk=pk)
             return redirect("covers_add", pk=pk)#
            
 

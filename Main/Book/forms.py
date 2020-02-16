@@ -3,10 +3,10 @@ from isbn_field import ISBNField
 from django.shortcuts import get_object_or_404
 
 from Book.models import Book, Author, BookCovers
-# from Book.validators import page_validator
 
 
-class BookForm(forms.ModelForm): #forms.Form
+
+class BookForm(forms.ModelForm):
     title = forms.CharField()
     publication_date = forms.CharField()
     authors = forms.ModelMultipleChoiceField(Author.objects.all())
@@ -19,7 +19,7 @@ class BookForm(forms.ModelForm): #forms.Form
         model = Book
         fields = ["title", "publication_date", "authors", "ISBN", "pages", "language"]
 
-class AuthorForm(forms.ModelForm): #forms.Form
+class AuthorForm(forms.ModelForm):
     name = forms.CharField()
     
     class Meta:

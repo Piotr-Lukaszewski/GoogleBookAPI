@@ -20,7 +20,7 @@ class BookCoversSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-	authors = AuthorSerializer(many=True, read_only=True)# klasy powiazanych serializerow musi sie znajdowac "fizycznie" nad 
+	authors = AuthorSerializer(many=True, read_only=True)
 	covers = BookCoversSerializer(many=True, required=False)
 
 	class Meta:

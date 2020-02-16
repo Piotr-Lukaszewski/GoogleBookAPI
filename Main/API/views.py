@@ -1,10 +1,8 @@
 from django.shortcuts import redirect
-# from rest_framework import mixins#mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView 
 from rest_framework import generics, filters, pagination
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django_filters.rest_framework import DjangoFilterBackend
-
 import requests
 
 
@@ -43,7 +41,6 @@ class GoogleImportBook(FormView):
 		search_type = dict(form.fields['search_type'].choices)[search_type]
 		value = str(search_type) + ":" + str(form.cleaned_data["search_phrase"])		
 		param = {"q":value, "key":settings.API_KEY}
-		print(value)
 		api_url = settings.API_URL#api_url = "https://www.googleapis.com/books/v1/volumes"	
 		response = requests.get(url=api_url, params=param)
 		items = response.json()["items"]
@@ -83,21 +80,6 @@ class GoogleImportBook(FormView):
 
 
 
-
-
-
-
-# class AuthorListView(generics.ListCreateAPIView):
-	
-# 	queryset = Author.objects.all()
-# 	serializer_class = AuthorSerializer
-
-
-
-# class AuthorDetailView(generics.RetrieveUpdateDestroyAPIView):
-	
-# 	queryset = Author.objects.all()
-# 	serializer_class = AuthorSerializer
 
 
 

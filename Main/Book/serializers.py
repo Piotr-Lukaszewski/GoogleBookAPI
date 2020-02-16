@@ -2,11 +2,6 @@ from rest_framework import serializers
 
 from Book.models import Book, Author
 
-
-
-# HyperlinkedModelSerializer
-# ModelSerializer
-
 class AuthorSerializer(serializers.ModelSerializer):	
 
 	class Meta:
@@ -14,7 +9,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 		fields = ["name"]
 
 class BookSerializer(serializers.ModelSerializer):
-	author = AuthorSerializer(read_only=True, many=True)# klasy powiazanych serializerow musze sie znajdowac "fizycznie" nad
+	author = AuthorSerializer(read_only=True, many=True)
 
 	class Meta:
 		model = Book
